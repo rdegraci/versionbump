@@ -31,7 +31,7 @@ int bump(const char* argv[]) {
     
     NSString* infoPlist = [NSString stringWithCString:argv[1] encoding:NSUTF8StringEncoding];
     NSDictionary* plist = [NSDictionary dictionaryWithContentsOfFile:infoPlist];
-    NSLog(@"plist = %@", [plist description]);
+    //NSLog(@"plist = %@", [plist description]);
     
     if (!plist) {
         NSString* errorString = [NSString stringWithFormat:@"Unable to read %@", infoPlist];
@@ -53,7 +53,7 @@ int bump(const char* argv[]) {
         return -3;
     }
     
-    NSLog(@"Version numbers = %@", [versionNumbers description]);
+    //NSLog(@"Version numbers = %@", [versionNumbers description]);
     NSString* buildVersion = [versionNumbers lastObject];
     NSInteger i_buildVersion = [buildVersion integerValue];
     
@@ -70,12 +70,12 @@ int bump(const char* argv[]) {
     [newVersionArray addObject:newBuildVersion];
     
     NSString* newBundleString = [newVersionArray componentsJoinedByString:@"."];
-    NSLog(@"New bundle version = %@", newBundleString);
+    //NSLog(@"New bundle version = %@", newBundleString);
     
     NSMutableDictionary* newPlist = [NSMutableDictionary dictionaryWithDictionary:plist];
     [newPlist setObject:newBundleString forKey:@"CFBundleVersion"];
     
-    NSLog(@"Writing to %@", infoPlist);
+    //NSLog(@"Writing to %@", infoPlist);
     BOOL result = [newPlist writeToFile:infoPlist atomically:YES];
     
     if (result == NO) {
@@ -84,6 +84,7 @@ int bump(const char* argv[]) {
         return -4;
     }
     
+    puts([newBundleString cStringUsingEncoding:NSUTF8StringEncoding]);
     return 0;
 }
 
