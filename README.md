@@ -15,18 +15,18 @@ versionbump /path/to/YOURPROJECT/YOURPROJECT-Info.plist
 How to use version bump in a simple script to bump the version number, create a commit with the version number, and pushing your project to a git repository after successfully compiling your project:
 
 
-BUILD_RESULT="`xcodebuild -project "YOURPROJECT.xcodeproj" -scheme "YOURPROJECT" -configuration "Debug" -sdk iphonesimulator6.0 clean build | grep 'BUILD SUCCEEDED'`"
+		BUILD_RESULT="`xcodebuild -project "YOURPROJECT.xcodeproj" -scheme "YOURPROJECT" -configuration "Debug" -sdk iphonesimulator6.0 clean build | grep 'BUILD SUCCEEDED'`"
 
-if [ "** BUILD SUCCEEDED **" = "$BUILD_RESULT" ]; then
-        PLIST="/path/to/YOURPROJECT/YOURPROJECT-Info.plist"
-        RESULT="`/usr/local/bin/versionbump /path/to/YOURPROJECT/YOURPROJECT-Info.plist`"
-        echo "Bumping version to $RESULT"
-        git add $PLIST
-        git commit -m "v$RESULT"
-        git push origin dev
-else
-        echo "Fail debug build"
-fi
+		if [ "** BUILD SUCCEEDED **" = "$BUILD_RESULT" ]; then
+		        PLIST="/path/to/YOURPROJECT/YOURPROJECT-Info.plist"
+		        RESULT="`/usr/local/bin/versionbump /path/to/YOURPROJECT/YOURPROJECT-Info.plist`"
+		        echo "Bumping version to $RESULT"
+		        git add $PLIST
+		        git commit -m "v$RESULT"
+		        git push origin dev
+		else
+		        echo "Fail debug build"
+		fi
 
 
 
