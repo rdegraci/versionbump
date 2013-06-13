@@ -29,5 +29,6 @@
 
 int main(int argc, const char * argv[]);
 int bump(const char* argv[]);
+int rcBump(const char* argv[]);
 
 #endif
