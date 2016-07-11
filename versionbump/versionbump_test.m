@@ -1,6 +1,6 @@
 //
-//  versionbump_test.m
-//  versionbump test
+//  main.m
+//  versionbump
 //
 //  Created by Rodney Degracia on 9/9/12.
 //  Copyright (c) 2012 Venture Intellectual LLC.
@@ -24,8 +24,12 @@
 //	THE SOFTWARE.
 //
 
-#import "versionbump_test.h"
+#import <XCTest/XCTest.h>
 #import "main.h"
+
+@interface versionbump_test : XCTestCase
+
+@end
 
 @implementation versionbump_test
 
@@ -51,7 +55,7 @@
     NSString* currentpath = [filemgr currentDirectoryPath];
     
     NSString* infoPlist = @"test-Info.plist";
-    NSString* plistPath = [NSString stringWithFormat:@"%@/versionbump test/%@", currentpath, infoPlist ];
+    NSString* plistPath = [NSString stringWithFormat:@"%@/versionbump test.xctest/Contents/Resources/%@", currentpath, infoPlist ];
     
     
     const char *cString = [plistPath cStringUsingEncoding:NSASCIIStringEncoding];
@@ -61,7 +65,8 @@
     const char* argv[] =  { "versionbump",cString};
     int result = bump(argv);
     
-    STAssertTrue(result == 0, @"Should be no errors");
+    XCTAssertTrue(result == 0, @"Should be no errors");
 }
+
 
 @end

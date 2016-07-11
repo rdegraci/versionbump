@@ -10,13 +10,11 @@
 		B34506CB15FCEA430053A7EE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B34506CA15FCEA430053A7EE /* Foundation.framework */; };
 		B34506CE15FCEA430053A7EE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B34506CD15FCEA430053A7EE /* main.m */; };
 		B34506D215FCEA430053A7EE /* versionbump.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = B34506D115FCEA430053A7EE /* versionbump.1 */; };
-		B34506DF15FCEC100053A7EE /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B34506DE15FCEC100053A7EE /* SenTestingKit.framework */; };
-		B34506E115FCEC100053A7EE /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B34506E015FCEC100053A7EE /* UIKit.framework */; };
 		B34506E215FCEC100053A7EE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B34506CA15FCEA430053A7EE /* Foundation.framework */; };
 		B34506E815FCEC100053A7EE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B34506E615FCEC100053A7EE /* InfoPlist.strings */; };
-		B34506EB15FCEC100053A7EE /* versionbump_test.m in Sources */ = {isa = PBXBuildFile; fileRef = B34506EA15FCEC100053A7EE /* versionbump_test.m */; };
 		B34506F115FCEDA20053A7EE /* test-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B34506F015FCEDA20053A7EE /* test-Info.plist */; };
 		B34506F215FCEDC30053A7EE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B34506CD15FCEA430053A7EE /* main.m */; };
+		B3D23BF51D33FE3500CFA359 /* versionbump_test.m in Sources */ = {isa = PBXBuildFile; fileRef = B3D23BF41D33FE3500CFA359 /* versionbump_test.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -38,16 +36,13 @@
 		B34506CD15FCEA430053A7EE /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		B34506D015FCEA430053A7EE /* versionbump-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "versionbump-Prefix.pch"; sourceTree = "<group>"; };
 		B34506D115FCEA430053A7EE /* versionbump.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = versionbump.1; sourceTree = "<group>"; };
-		B34506DD15FCEC100053A7EE /* versionbump test.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "versionbump test.octest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		B34506DE15FCEC100053A7EE /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
-		B34506E015FCEC100053A7EE /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
+		B34506DD15FCEC100053A7EE /* versionbump test.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "versionbump test.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B34506E515FCEC100053A7EE /* versionbump test-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "versionbump test-Info.plist"; sourceTree = "<group>"; };
 		B34506E715FCEC100053A7EE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		B34506E915FCEC100053A7EE /* versionbump_test.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = versionbump_test.h; sourceTree = "<group>"; };
-		B34506EA15FCEC100053A7EE /* versionbump_test.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = versionbump_test.m; sourceTree = "<group>"; };
 		B34506EC15FCEC100053A7EE /* versionbump test-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "versionbump test-Prefix.pch"; sourceTree = "<group>"; };
 		B34506F015FCEDA20053A7EE /* test-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "test-Info.plist"; sourceTree = "<group>"; };
 		B34506F315FCEE810053A7EE /* main.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = main.h; sourceTree = "<group>"; };
+		B3D23BF41D33FE3500CFA359 /* versionbump_test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = versionbump_test.m; path = versionbump/versionbump_test.m; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,8 +58,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B34506DF15FCEC100053A7EE /* SenTestingKit.framework in Frameworks */,
-				B34506E115FCEC100053A7EE /* UIKit.framework in Frameworks */,
 				B34506E215FCEC100053A7EE /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -86,7 +79,7 @@
 			isa = PBXGroup;
 			children = (
 				B34506C615FCEA430053A7EE /* versionbump */,
-				B34506DD15FCEC100053A7EE /* versionbump test.octest */,
+				B34506DD15FCEC100053A7EE /* versionbump test.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -95,8 +88,6 @@
 			isa = PBXGroup;
 			children = (
 				B34506CA15FCEA430053A7EE /* Foundation.framework */,
-				B34506DE15FCEC100053A7EE /* SenTestingKit.framework */,
-				B34506E015FCEC100053A7EE /* UIKit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -124,8 +115,7 @@
 			isa = PBXGroup;
 			children = (
 				B34506F015FCEDA20053A7EE /* test-Info.plist */,
-				B34506E915FCEC100053A7EE /* versionbump_test.h */,
-				B34506EA15FCEC100053A7EE /* versionbump_test.m */,
+				B3D23BF41D33FE3500CFA359 /* versionbump_test.m */,
 				B34506E415FCEC100053A7EE /* Supporting Files */,
 			);
 			path = "versionbump test";
@@ -168,7 +158,6 @@
 				B34506D815FCEC100053A7EE /* Sources */,
 				B34506D915FCEC100053A7EE /* Frameworks */,
 				B34506DA15FCEC100053A7EE /* Resources */,
-				B34506DB15FCEC100053A7EE /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -176,8 +165,8 @@
 			);
 			name = "versionbump test";
 			productName = "versionbump test";
-			productReference = B34506DD15FCEC100053A7EE /* versionbump test.octest */;
-			productType = "com.apple.product-type.bundle";
+			productReference = B34506DD15FCEC100053A7EE /* versionbump test.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
 
@@ -185,7 +174,8 @@
 		B34506BD15FCEA420053A7EE /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0440;
+				LastTestingUpgradeCheck = 0730;
+				LastUpgradeCheck = 0730;
 				ORGANIZATIONNAME = "Venture Intellectual";
 			};
 			buildConfigurationList = B34506C015FCEA420053A7EE /* Build configuration list for PBXProject "versionbump" */;
@@ -218,22 +208,6 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
-/* Begin PBXShellScriptBuildPhase section */
-		B34506DB15FCEC100053A7EE /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
-		};
-/* End PBXShellScriptBuildPhase section */
-
 /* Begin PBXSourcesBuildPhase section */
 		B34506C215FCEA430053A7EE /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -247,7 +221,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B34506EB15FCEC100053A7EE /* versionbump_test.m in Sources */,
+				B3D23BF51D33FE3500CFA359 /* versionbump_test.m in Sources */,
 				B34506F215FCEDC30053A7EE /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -270,11 +244,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
@@ -298,7 +272,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -336,39 +309,39 @@
 		B34506EE15FCEC100053A7EE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				FRAMEWORK_SEARCH_PATHS = (
-					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
 					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
+					"$(inherited)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "versionbump test/versionbump test-Prefix.pch";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "versionbump test/versionbump test-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.elvenlabs.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
-				WRAPPER_EXTENSION = octest;
+				SDKROOT = macosx;
 			};
 			name = Debug;
 		};
 		B34506EF15FCEC100053A7EE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				FRAMEWORK_SEARCH_PATHS = (
-					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
 					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
+					"$(inherited)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "versionbump test/versionbump test-Prefix.pch";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "versionbump test/versionbump test-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.elvenlabs.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
+				SDKROOT = macosx;
 				VALIDATE_PRODUCT = YES;
-				WRAPPER_EXTENSION = octest;
 			};
 			name = Release;
 		};
@@ -391,6 +364,7 @@
 				B34506D715FCEA430053A7EE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		B34506ED15FCEC100053A7EE /* Build configuration list for PBXNativeTarget "versionbump test" */ = {
 			isa = XCConfigurationList;
@@ -399,6 +373,7 @@
 				B34506EF15FCEC100053A7EE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
