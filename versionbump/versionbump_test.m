@@ -47,6 +47,38 @@
     [super tearDown];
 }
 
+
+- (void)testIsReleaseCandidate {
+    
+    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+    NSString *plistPath = [bundle pathForResource:@"test-Info" ofType:@"plist"];
+    
+    
+    const char *cString = [plistPath cStringUsingEncoding:NSASCIIStringEncoding];
+    
+    const char* argv[] =  { "versionbump", "--rc", cString};
+    
+    bool result = isReleaseCandidate(3, argv);
+    
+    XCTAssertTrue(result == true, @"Should be no errors");
+}
+
+
+- (void)testIsSingleBuildNumber {
+    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+    NSString *plistPath = [bundle pathForResource:@"test-Info" ofType:@"plist"];
+    
+    
+    const char *cString = [plistPath cStringUsingEncoding:NSASCIIStringEncoding];
+    
+    const char* argv[] =  { "versionbump", "--single", cString};
+    
+    bool result = isSingleBuildNumber(3, argv);
+    
+    XCTAssertTrue(result == true, @"Should be no errors");
+}
+
+
 - (void)testBump
 {
     

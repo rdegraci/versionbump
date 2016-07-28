@@ -36,14 +36,8 @@ int main(int argc, const char * argv[])
             puts("versionbump v1.1\nUsage: versionbump [--rc] [--single] [app-info.plist]");
         } else {
             
-            bool releaseCandidate = false;
-            bool singleBuildNumber = false;
-
-            for (const char **arg = argv; *arg; ++arg) {
-                NSString* argument = [NSString stringWithCString:*arg encoding:NSUTF8StringEncoding];
-                releaseCandidate = ([argument isEqualToString:@"--rc"]);
-                singleBuildNumber = ([argument isEqualToString:@"--single"]);
-            }
+            bool releaseCandidate = isReleaseCandidate(argc, argv);
+            bool singleBuildNumber = isSingleBuildNumber(argc, argv);
             
             if (singleBuildNumber) {
                 singleBuildBump(argc, argv);
@@ -62,6 +56,30 @@ int main(int argc, const char * argv[])
     return 0;
 }
 
+bool isReleaseCandidate(int argc, const char* argv[]) {
+    bool releaseCandidate = false;
+    
+    for (const char **arg = argv; *arg; ++arg) {
+        NSString* argument = [NSString stringWithCString:*arg encoding:NSUTF8StringEncoding];
+        releaseCandidate = ([argument isEqualToString:@"--rc"]);
+        if (releaseCandidate) break;
+    }
+    
+    return releaseCandidate;
+
+}
+
+bool isSingleBuildNumber(int argc, const char* argv[]) {
+    bool singleBuildNumber = false;
+    
+    for (const char **arg = argv; *arg; ++arg) {
+        NSString* argument = [NSString stringWithCString:*arg encoding:NSUTF8StringEncoding];
+        singleBuildNumber = ([argument isEqualToString:@"--single"]);
+        if (singleBuildNumber) break;;
+    }
+    
+    return singleBuildNumber;
+}
 
 int rcBuildNumber(int argc, const char* argv[]) {
     
