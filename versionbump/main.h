@@ -28,7 +28,8 @@
 #define versionbump_main_h
 
 int main(int argc, const char * argv[]);
-int bump(const char* argv[]);
-int rcBump(const char* argv[]);
+int bump(int argc, const char* argv[]);
+int singleBuildBump(int argc, const char* argv[]);
+int rcBuildNumber(int argc, const char* argv[]);
 
 #endif

@@ -33,16 +33,28 @@ int main(int argc, const char * argv[])
     @autoreleasepool {
         
         if (argc < 2) {
-            puts("versionbump v1.1\nUsage: versionbump [--rc] [app-info.plist]");
+            puts("versionbump v1.1\nUsage: versionbump [--rc] [--single] [app-info.plist]");
         } else {
-            NSString* rcFlag = [NSString stringWithCString:argv[1] encoding:NSUTF8StringEncoding];
-            bool releaseCandidate = ([rcFlag isEqualToString:@"--rc"]);
-            if (!releaseCandidate) {
-                bump(argv);
+            
+            bool releaseCandidate = false;
+            bool singleBuildNumber = false;
+
+            for (const char **arg = argv; *arg; ++arg) {
+                NSString* argument = [NSString stringWithCString:*arg encoding:NSUTF8StringEncoding];
+                releaseCandidate = ([argument isEqualToString:@"--rc"]);
+                singleBuildNumber = ([argument isEqualToString:@"--single"]);
             }
+            
+            if (singleBuildNumber) {
+                singleBuildBump(argc, argv);
+            } else {
+                bump(argc, argv);
+            }
+            
             if (releaseCandidate) {
-                rcBump(argv);
+                rcBuildNumber(argc, argv);
             }
+
         }
         
         
@@ -50,15 +62,17 @@ int main(int argc, const char * argv[])
     return 0;
 }
 
-int rcBump(const char* argv[]) {
+
+int rcBuildNumber(int argc, const char* argv[]) {
     
-    NSString* infoPlist = [NSString stringWithCString:argv[2] encoding:NSUTF8StringEncoding];
+    NSString* infoPlist = [NSString stringWithCString:argv[ argc - 1] encoding:NSUTF8StringEncoding];
     NSDictionary* plist = [NSDictionary dictionaryWithContentsOfFile:infoPlist];
     //NSLog(@"plist = %@", [plist description]);
     
     if (!plist) {
         NSString* errorString = [NSString stringWithFormat:@"Unable to read %@", infoPlist];
         puts([errorString cStringUsingEncoding:NSUTF8StringEncoding]);
+        NSCAssert(plist, errorString);
         return -1;
     }
     
@@ -66,24 +80,12 @@ int rcBump(const char* argv[]) {
     if (bundleString == nil) {
         NSString* errorString = [NSString stringWithFormat:@"CFBundleVersion missing from %@", infoPlist];
         puts([errorString cStringUsingEncoding:NSUTF8StringEncoding]);
+        NSCAssert(bundleString != nil, errorString);
         return -2;
     }
     
-    NSArray* versionNumbers = [bundleString componentsSeparatedByString:@"."];
-    if ([versionNumbers count] < 2) {
-        NSString* errorString = [NSString stringWithFormat:@"Version convention must be at least major.minor in %@", infoPlist];
-        puts([errorString cStringUsingEncoding:NSUTF8StringEncoding]);
-        return -3;
-    }
-    
-    NSString* lastVersion = [versionNumbers lastObject];
-    
-    NSString* newBuildVersion = [NSString stringWithFormat:@"%@rc", lastVersion];
-    NSMutableArray* newVersionArray = [NSMutableArray arrayWithArray:versionNumbers];
-    [newVersionArray removeLastObject];
-    [newVersionArray addObject:newBuildVersion];
-    
-    NSString* newBundleString = [newVersionArray componentsJoinedByString:@"."];
+
+    NSString* newBundleString = [NSString stringWithFormat:@"%@rc", bundleString];
     //NSLog(@"New bundle version = %@", newBundleString);
     
     NSMutableDictionary* newPlist = [NSMutableDictionary dictionaryWithDictionary:plist];
@@ -95,6 +97,62 @@ int rcBump(const char* argv[]) {
     if (result == NO) {
         NSString* errorString = [NSString stringWithFormat:@"Unable to write to %@", infoPlist];
         puts([errorString cStringUsingEncoding:NSUTF8StringEncoding]);
+        NSCAssert(result == YES, errorString);
+        return -3;
+    }
+    
+    puts([newBundleString cStringUsingEncoding:NSUTF8StringEncoding]);
+    return 0;
+}
+
+int singleBuildBump(int argc, const char* argv[]) {
+    
+    NSString* infoPlist = [NSString stringWithCString:argv[ argc - 1] encoding:NSUTF8StringEncoding];
+    NSDictionary* plist = [NSDictionary dictionaryWithContentsOfFile:infoPlist];
+    //NSLog(@"plist = %@", [plist description]);
+    
+    if (!plist) {
+        NSString* errorString = [NSString stringWithFormat:@"Unable to read %@", infoPlist];
+        puts([errorString cStringUsingEncoding:NSUTF8StringEncoding]);
+        NSCAssert(plist, errorString);
+        return -1;
+    }
+    
+    NSString* bundleString = [plist objectForKey:@"CFBundleVersion"];
+    if (bundleString == nil) {
+        NSString* errorString = [NSString stringWithFormat:@"CFBundleVersion missing from %@", infoPlist];
+        puts([errorString cStringUsingEncoding:NSUTF8StringEncoding]);
+        NSCAssert(bundleString != nil, errorString);
+        return -2;
+    }
+    
+    NSArray* versionNumbers = [bundleString componentsSeparatedByString:@"."];
+    if ([versionNumbers count] > 2) {
+        NSString* errorString = [NSString stringWithFormat:@"Version convention must be a single number in %@", infoPlist];
+        puts([errorString cStringUsingEncoding:NSUTF8StringEncoding]);
+        NSCAssert([versionNumbers count] < 3, errorString);
+        return -3;
+    }
+    
+    NSString* lastVersion = [versionNumbers firstObject];
+    NSInteger ver = [lastVersion integerValue];
+    ver = ver + 1;
+    NSNumber* versionNumber = @(ver);
+
+    
+    NSString* newBundleString = [versionNumber stringValue];
+    //NSLog(@"New bundle version = %@", newBundleString);
+    
+    NSMutableDictionary* newPlist = [NSMutableDictionary dictionaryWithDictionary:plist];
+    [newPlist setObject:newBundleString forKey:@"CFBundleVersion"];
+    
+    //NSLog(@"Writing to %@", infoPlist);
+    BOOL result = [newPlist writeToFile:infoPlist atomically:YES];
+    
+    if (result == NO) {
+        NSString* errorString = [NSString stringWithFormat:@"Unable to write to %@", infoPlist];
+        puts([errorString cStringUsingEncoding:NSUTF8StringEncoding]);
+        NSCAssert(result == YES, errorString);
         return -4;
     }
     
@@ -102,9 +160,11 @@ int rcBump(const char* argv[]) {
     return 0;
 }
 
-int bump(const char* argv[]) {
-        
-    NSString* infoPlist = [NSString stringWithCString:argv[1] encoding:NSUTF8StringEncoding];
+
+
+int bump(int argc, const char* argv[]) {
+    
+    NSString* infoPlist = [NSString stringWithCString:argv[argc - 1] encoding:NSUTF8StringEncoding];
     NSDictionary* plist = [NSDictionary dictionaryWithContentsOfFile:infoPlist];
     //NSLog(@"plist = %@", [plist description]);
     

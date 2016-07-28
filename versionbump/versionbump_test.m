@@ -47,15 +47,12 @@
     [super tearDown];
 }
 
-- (void)testExample
+- (void)testBump
 {
     
-    NSFileManager* filemgr = [[NSFileManager alloc] init];
     
-    NSString* currentpath = [filemgr currentDirectoryPath];
-    
-    NSString* infoPlist = @"test-Info.plist";
-    NSString* plistPath = [NSString stringWithFormat:@"%@/versionbump test.xctest/Contents/Resources/%@", currentpath, infoPlist ];
+    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+    NSString *plistPath = [bundle pathForResource:@"test-Info" ofType:@"plist"];
     
     
     const char *cString = [plistPath cStringUsingEncoding:NSASCIIStringEncoding];
@@ -63,9 +60,69 @@
     NSLog(@"string, %s", cString);
     
     const char* argv[] =  { "versionbump",cString};
-    int result = bump(argv);
+    int result = bump(2, argv);
     
     XCTAssertTrue(result == 0, @"Should be no errors");
+}
+
+- (void)testRCBump
+{
+    
+    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+    NSString *plistPath = [bundle pathForResource:@"test-Info" ofType:@"plist"];
+    
+    
+    const char *cString = [plistPath cStringUsingEncoding:NSASCIIStringEncoding];
+    
+    NSLog(@"string, %s", cString);
+    
+    const char* argv[] =  { "versionbump", "--rc", cString};
+    int result1 = bump(3, argv);
+    
+    XCTAssertTrue(result1 == 0, @"Should be no errors");
+    
+    int result2 = rcBuildNumber(3, argv);
+    
+    XCTAssertTrue(result2 == 0, @"Should be no errors");
+}
+
+
+- (void)testSingleBuildBump
+{
+    
+    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+    NSString *plistPath = [bundle pathForResource:@"test-Info2" ofType:@"plist"];
+    
+    
+    const char *cString = [plistPath cStringUsingEncoding:NSASCIIStringEncoding];
+    
+    NSLog(@"string, %s", cString);
+    
+    const char* argv[] =  { "versionbump", "--single", cString};
+    int result = singleBuildBump(3, argv);
+    
+    XCTAssertTrue(result == 0, @"Should be no errors");
+}
+
+- (void)testSingleBuildBumpWithRC
+{
+    
+    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+    NSString *plistPath = [bundle pathForResource:@"test-Info2" ofType:@"plist"];
+    
+    
+    const char *cString = [plistPath cStringUsingEncoding:NSASCIIStringEncoding];
+    
+    NSLog(@"string, %s", cString);
+    
+    const char* argv[] =  { "versionbump", "--single", "-rc", cString};
+    int result1 = singleBuildBump(4, argv);
+    
+    XCTAssertTrue(result1 == 0, @"Should be no errors");
+    
+    int result2 = rcBuildNumber(4, argv);
+    
+    XCTAssertTrue(result2 == 0, @"Should be no errors");
 }
 
 
