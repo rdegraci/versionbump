@@ -148,13 +148,10 @@
     NSLog(@"string, %s", cString);
     
     const char* argv[] =  { "versionbump", "--single", "-rc", cString};
-    int result1 = singleBuildBump(4, argv);
+    int result1 = rcSingleBuildNumber(4, argv);
     
     XCTAssertTrue(result1 == 0, @"Should be no errors");
     
-    int result2 = rcBuildNumber(4, argv);
-    
-    XCTAssertTrue(result2 == 0, @"Should be no errors");
 }
 
 

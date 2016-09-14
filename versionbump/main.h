@@ -31,6 +31,7 @@ int main(int argc, const char * argv[]);
 int bump(int argc, const char* argv[]);
 int singleBuildBump(int argc, const char* argv[]);
 int rcBuildNumber(int argc, const char* argv[]);
+int rcSingleBuildNumber(int argc, const char* argv[]);
 bool isReleaseCandidate(int argc, const char* argv[]);
 bool isSingleBuildNumber(int argc, const char* argv[]);
 #endif

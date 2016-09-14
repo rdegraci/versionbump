@@ -39,14 +39,19 @@ int main(int argc, const char * argv[])
             bool releaseCandidate = isReleaseCandidate(argc, argv);
             bool singleBuildNumber = isSingleBuildNumber(argc, argv);
             
-            if (singleBuildNumber) {
-                singleBuildBump(argc, argv);
-            } else {
-                bump(argc, argv);
-            }
-            
             if (releaseCandidate) {
-                rcBuildNumber(argc, argv);
+                if (singleBuildNumber) {
+                    rcSingleBuildNumber(argc, argv);
+                } else {
+                    rcBuildNumber(argc, argv);
+                }
+                
+            } else {
+                if (singleBuildNumber) {
+                    singleBuildBump(argc, argv);
+                } else {
+                    bump(argc, argv);
+                }
             }
 
         }
@@ -80,6 +85,62 @@ bool isSingleBuildNumber(int argc, const char* argv[]) {
     
     return singleBuildNumber;
 }
+
+
+
+
+int rcSingleBuildNumber(int argc, const char* argv[]) {
+    
+    NSString* infoPlist = [NSString stringWithCString:argv[ argc - 1] encoding:NSUTF8StringEncoding];
+    NSDictionary* plist = [NSDictionary dictionaryWithContentsOfFile:infoPlist];
+    //NSLog(@"plist = %@", [plist description]);
+    
+    if (!plist) {
+        NSString* errorString = [NSString stringWithFormat:@"Unable to read %@", infoPlist];
+        puts([errorString cStringUsingEncoding:NSUTF8StringEncoding]);
+        NSCAssert(plist, errorString);
+        return -1;
+    }
+    
+    NSString* bundleString = [plist objectForKey:@"CFBundleVersion"];
+    if (bundleString == nil) {
+        NSString* errorString = [NSString stringWithFormat:@"CFBundleVersion missing from %@", infoPlist];
+        puts([errorString cStringUsingEncoding:NSUTF8StringEncoding]);
+        NSCAssert(bundleString != nil, errorString);
+        return -2;
+    }
+
+    NSString* bundleStringShortVersionString = [plist objectForKey:@"CFBundleShortVersionString"];
+    if (bundleStringShortVersionString == nil) {
+        NSString* errorString = [NSString stringWithFormat:@"CFBundleShortVersionString missing from %@", infoPlist];
+        puts([errorString cStringUsingEncoding:NSUTF8StringEncoding]);
+        NSCAssert(bundleString != nil, errorString);
+        return -3;
+    }
+    
+    NSString* newBundleString = [NSString stringWithFormat:@"%@rc", bundleString];
+    //NSLog(@"New bundle version = %@", newBundleString);
+    
+    NSMutableDictionary* newPlist = [NSMutableDictionary dictionaryWithDictionary:plist];
+    [newPlist setObject:newBundleString forKey:@"CFBundleVersion"];
+    
+    //NSLog(@"Writing to %@", infoPlist);
+    BOOL result = [newPlist writeToFile:infoPlist atomically:YES];
+    
+    if (result == NO) {
+        NSString* errorString = [NSString stringWithFormat:@"Unable to write to %@", infoPlist];
+        puts([errorString cStringUsingEncoding:NSUTF8StringEncoding]);
+        NSCAssert(result == YES, errorString);
+        return -3;
+    }
+    
+    
+    NSString* newVersion = [NSString stringWithFormat:@"%@ build %@", bundleStringShortVersionString, newBundleString];
+
+    puts([newVersion cStringUsingEncoding:NSUTF8StringEncoding]);
+    return 0;
+}
+
 
 int rcBuildNumber(int argc, const char* argv[]) {
     
@@ -152,6 +213,16 @@ int singleBuildBump(int argc, const char* argv[]) {
         return -3;
     }
     
+    
+    
+    NSString* bundleStringShortVersionString = [plist objectForKey:@"CFBundleShortVersionString"];
+    if (bundleStringShortVersionString == nil) {
+        NSString* errorString = [NSString stringWithFormat:@"CFBundleShortVersionString missing from %@", infoPlist];
+        puts([errorString cStringUsingEncoding:NSUTF8StringEncoding]);
+        NSCAssert(bundleString != nil, errorString);
+        return -4;
+    }
+    
     NSString* lastVersion = [versionNumbers firstObject];
     NSInteger ver = [lastVersion integerValue];
     ver = ver + 1;
@@ -174,7 +245,9 @@ int singleBuildBump(int argc, const char* argv[]) {
         return -4;
     }
     
-    puts([newBundleString cStringUsingEncoding:NSUTF8StringEncoding]);
+    NSString* newVersion = [NSString stringWithFormat:@"%@ build %@", bundleStringShortVersionString, newBundleString];
+    
+    puts([newVersion cStringUsingEncoding:NSUTF8StringEncoding]);
     return 0;
 }
 
